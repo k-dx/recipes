@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import Recipe from "./Recipe";
-import { RecipeContext } from "../providers/RecipeProvider/RecipeProvider";
+import { useRecipe } from "../providers/RecipeProvider/useRecipe";
 
 export default function RecipeList() {
-  const { recipes } = useContext(RecipeContext);
+  const { recipes } = useRecipe();
   return (
     <div>
       <h1>Recipes</h1>
