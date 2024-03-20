@@ -12,7 +12,7 @@ export default function Recipe({
   const { removeRecipe, toggleFavorite } = useRecipe();
 
   return (
-    <div className="border m-2 p-4 max-w-96">
+    <div className="border p-4 mb-4">
       <div className="flex justify-between items-center border-b pb-2 mb-2">
         <div>
           <h1 className="text-lg font-bold inline mr-2">{name}</h1>

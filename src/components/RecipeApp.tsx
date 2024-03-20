@@ -7,7 +7,7 @@ export default function RecipeApp() {
   const [addRecipe, setAddRecipe] = useState(false);
 
   return (
-    <div className="dark:bg-slate-800 dark:text-white min-h-screen max-w-2xl mx-auto mt-10">
+    <div className="max-w-2xl mx-auto">
       {addRecipe ? (
         <AddRecipe addRecipe={() => setAddRecipe(!addRecipe)} />
       ) : (

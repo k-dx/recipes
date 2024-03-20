@@ -16,7 +16,7 @@ export default function Filters({ className }: IProps) {
           value={filters.search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
-        <div className="flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-r-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 mr-2">
+        <div className="flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-r-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 m">
           <input
             id="favorite-checkbox"
             type="checkbox"
