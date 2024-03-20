@@ -1,26 +1,49 @@
 import { IRecipe } from "../../types/IRecipe.type";
+import { IState } from "../../types/IState.type";
 
 type RecipeAction =
   | { type: "ADD_RECIPE"; payload: IRecipe }
   | { type: "DELETE_RECIPE"; payload: number }
-  | { type: "UPDATE_RECIPE"; payload: IRecipe }
-  | { type: "TOGGLE_FAVORITE"; payload: number };
+  // | { type: "UPDATE_RECIPE"; payload: IRecipe }
+  | { type: "TOGGLE_FAVORITE"; payload: number }
+  | { type: "SEARCH_CHANGE"; payload: string }
+  | { type: "FAVORITE_CHANGE" };
 
-export const recipeReducer = (state: IRecipe[], action: RecipeAction) => {
+export const recipeAppReducer = (state: IState, action: RecipeAction) => {
+  console.log(action);
   switch (action.type) {
     case "ADD_RECIPE":
-      return [...state, action.payload];
+      return {
+        filters: state.filters,
+        recipes: [...state.recipes, action.payload],
+      };
     case "DELETE_RECIPE":
-      return state.filter((recipe) => recipe.id !== action.payload);
-    case "UPDATE_RECIPE":
-      return state.map((recipe) =>
-        recipe.id === action.payload.id ? action.payload : recipe
-      );
+      return {
+        ...state,
+        recipes: state.recipes.filter((recipe) => recipe.id !== action.payload),
+      };
+    // case "UPDATE_RECIPE":
+    //   return state.map((recipe) =>
+    //     recipe.id === action.payload.id ? action.payload : recipe
+    //   );
     case "TOGGLE_FAVORITE":
-      return state.map((recipe) =>
-        recipe.id === action.payload
-          ? { ...recipe, favorite: !recipe.favorite }
-          : recipe
-      );
+      return {
+        filters: state.filters,
+        recipes: state.recipes.map((recipe) =>
+          recipe.id === action.payload
+            ? { ...recipe, favorite: !recipe.favorite }
+            : recipe
+        ),
+      };
+    case "SEARCH_CHANGE":
+      return {
+        filters: { ...state.filters, search: action.payload },
+        recipes: state.recipes,
+      };
+    case "FAVORITE_CHANGE":
+      return {
+        filters: { ...state.filters, favorite: !state.filters.favorite },
+        recipes: state.recipes,
+      };
   }
 };

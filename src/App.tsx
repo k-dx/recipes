@@ -1,11 +1,11 @@
 import "./index.css";
 import RecipeProvider from "./providers/RecipeProvider/RecipeProvider";
-import RecipeList from "./components/RecipeList";
+import RecipeApp from "./components/RecipeApp";
 
 function App() {
   return (
     <RecipeProvider>
-      <RecipeList />
+      <RecipeApp />
     </RecipeProvider>
   );
 }

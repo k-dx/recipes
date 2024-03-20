@@ -1,6 +1,8 @@
 import { createContext, useReducer } from "react";
 import { IRecipe } from "../../types/IRecipe.type.ts";
-import { recipeReducer } from "./recipeReducer.ts";
+import { recipeAppReducer } from "./recipeReducer.ts";
+import { IState } from "../../types/IState.type.ts";
+import { IFilters } from "../../types/IFilters.type.ts";
 
 const initialRecipes: IRecipe[] = [
   {
@@ -21,14 +23,30 @@ const initialRecipes: IRecipe[] = [
   },
 ];
 
+const initialFilters: IFilters = {
+  search: "",
+  favorite: false,
+};
+
+const initialState: IState = {
+  recipes: initialRecipes,
+  filters: initialFilters,
+};
+
 export const RecipeContext = createContext<{
   recipes: IRecipe[];
+  filters: IFilters;
   removeRecipe: (id: number) => void;
   toggleFavorite: (id: number) => void;
+  onSearchChange: (search: string) => void;
+  onFavoriteChange: () => void;
 }>({
   recipes: initialRecipes,
+  filters: initialFilters,
   removeRecipe: () => {},
   toggleFavorite: () => {},
+  onSearchChange: () => {},
+  onFavoriteChange: () => {},
 });
 
 export default function RecipeProvider({
@@ -36,7 +54,9 @@ export default function RecipeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [recipes, dispatch] = useReducer(recipeReducer, initialRecipes);
+  const [state, dispatch] = useReducer(recipeAppReducer, initialState);
+  const recipes = state.recipes;
+  const filters = state.filters;
 
   function removeRecipe(id: number) {
     dispatch({ type: "DELETE_RECIPE", payload: id });
@@ -46,8 +66,25 @@ export default function RecipeProvider({
     dispatch({ type: "TOGGLE_FAVORITE", payload: id });
   }
 
+  function onSearchChange(search: string) {
+    dispatch({ type: "SEARCH_CHANGE", payload: search });
+  }
+
+  function onFavoriteChange() {
+    dispatch({ type: "FAVORITE_CHANGE" });
+  }
+
   return (
-    <RecipeContext.Provider value={{ recipes, removeRecipe, toggleFavorite }}>
+    <RecipeContext.Provider
+      value={{
+        recipes,
+        filters,
+        removeRecipe,
+        toggleFavorite,
+        onSearchChange,
+        onFavoriteChange,
+      }}
+    >
       {children}
     </RecipeContext.Provider>
   );
