@@ -3,7 +3,8 @@ import { IRecipe } from "../../types/IRecipe.type";
 type RecipeAction =
   | { type: "ADD_RECIPE"; payload: IRecipe }
   | { type: "DELETE_RECIPE"; payload: number }
-  | { type: "UPDATE_RECIPE"; payload: IRecipe };
+  | { type: "UPDATE_RECIPE"; payload: IRecipe }
+  | { type: "TOGGLE_FAVORITE"; payload: number };
 
 export const recipeReducer = (state: IRecipe[], action: RecipeAction) => {
   switch (action.type) {
@@ -14,6 +15,12 @@ export const recipeReducer = (state: IRecipe[], action: RecipeAction) => {
     case "UPDATE_RECIPE":
       return state.map((recipe) =>
         recipe.id === action.payload.id ? action.payload : recipe
+      );
+    case "TOGGLE_FAVORITE":
+      return state.map((recipe) =>
+        recipe.id === action.payload
+          ? { ...recipe, favorite: !recipe.favorite }
+          : recipe
       );
   }
 };

@@ -24,9 +24,11 @@ const initialRecipes: IRecipe[] = [
 export const RecipeContext = createContext<{
   recipes: IRecipe[];
   removeRecipe: (id: number) => void;
+  toggleFavorite: (id: number) => void;
 }>({
   recipes: initialRecipes,
   removeRecipe: () => {},
+  toggleFavorite: () => {},
 });
 
 export default function RecipeProvider({
@@ -40,8 +42,12 @@ export default function RecipeProvider({
     dispatch({ type: "DELETE_RECIPE", payload: id });
   }
 
+  function toggleFavorite(id: number) {
+    dispatch({ type: "TOGGLE_FAVORITE", payload: id });
+  }
+
   return (
-    <RecipeContext.Provider value={{ recipes, removeRecipe }}>
+    <RecipeContext.Provider value={{ recipes, removeRecipe, toggleFavorite }}>
       {children}
     </RecipeContext.Provider>
   );
