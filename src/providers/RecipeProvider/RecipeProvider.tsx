@@ -3,6 +3,7 @@ import { IRecipe } from "../../types/IRecipe.type.ts";
 import { recipeAppReducer } from "./recipeReducer.ts";
 import { IState } from "../../types/IState.type.ts";
 import { IFilters } from "../../types/IFilters.type.ts";
+import { ISubmittedRecipe } from "../../types/ISubmittedRecipe.type.ts";
 
 const initialRecipes: IRecipe[] = [
   {
@@ -40,6 +41,7 @@ export const RecipeContext = createContext<{
   toggleFavorite: (id: number) => void;
   onSearchChange: (search: string) => void;
   onFavoriteChange: () => void;
+  addRecipe: (recipe: ISubmittedRecipe) => void;
 }>({
   recipes: initialRecipes,
   filters: initialFilters,
@@ -47,6 +49,7 @@ export const RecipeContext = createContext<{
   toggleFavorite: () => {},
   onSearchChange: () => {},
   onFavoriteChange: () => {},
+  addRecipe: () => {},
 });
 
 export default function RecipeProvider({
@@ -74,6 +77,20 @@ export default function RecipeProvider({
     dispatch({ type: "FAVORITE_CHANGE" });
   }
 
+  function addRecipe({ name, ingredients, description }: ISubmittedRecipe) {
+    const id = recipes.reduce((acc, recipe) => Math.max(acc, recipe.id), 0) + 1;
+    dispatch({
+      type: "ADD_RECIPE",
+      payload: {
+        id: id,
+        name,
+        ingredients,
+        description,
+        favorite: false,
+      },
+    });
+  }
+
   return (
     <RecipeContext.Provider
       value={{
@@ -83,6 +100,7 @@ export default function RecipeProvider({
         toggleFavorite,
         onSearchChange,
         onFavoriteChange,
+        addRecipe,
       }}
     >
       {children}

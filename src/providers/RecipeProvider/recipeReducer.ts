@@ -4,7 +4,6 @@ import { IState } from "../../types/IState.type";
 type RecipeAction =
   | { type: "ADD_RECIPE"; payload: IRecipe }
   | { type: "DELETE_RECIPE"; payload: number }
-  // | { type: "UPDATE_RECIPE"; payload: IRecipe }
   | { type: "TOGGLE_FAVORITE"; payload: number }
   | { type: "SEARCH_CHANGE"; payload: string }
   | { type: "FAVORITE_CHANGE" };
@@ -22,10 +21,6 @@ export const recipeAppReducer = (state: IState, action: RecipeAction) => {
         ...state,
         recipes: state.recipes.filter((recipe) => recipe.id !== action.payload),
       };
-    // case "UPDATE_RECIPE":
-    //   return state.map((recipe) =>
-    //     recipe.id === action.payload.id ? action.payload : recipe
-    //   );
     case "TOGGLE_FAVORITE":
       return {
         filters: state.filters,

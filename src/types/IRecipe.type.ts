@@ -1,7 +1,6 @@
-export interface IRecipe {
+import { ISubmittedRecipe } from './ISubmittedRecipe.type';
+
+export interface IRecipe extends ISubmittedRecipe {
   id: number;
-  name: string;
   favorite: boolean;
-  ingredients: string[];
-  description: string;
 }
