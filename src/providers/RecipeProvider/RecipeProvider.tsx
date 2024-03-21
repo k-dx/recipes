@@ -34,23 +34,18 @@ const initialState: IState = {
   filters: initialFilters,
 };
 
-export const RecipeContext = createContext<{
-  recipes: IRecipe[];
-  filters: IFilters;
-  removeRecipe: (id: number) => void;
-  toggleFavorite: (id: number) => void;
-  onSearchChange: (search: string) => void;
-  onFavoriteChange: () => void;
-  addRecipe: (recipe: ISubmittedRecipe) => void;
-}>({
-  recipes: initialRecipes,
-  filters: initialFilters,
-  removeRecipe: () => {},
-  toggleFavorite: () => {},
-  onSearchChange: () => {},
-  onFavoriteChange: () => {},
-  addRecipe: () => {},
-});
+export const RecipeContext = createContext<
+  | {
+      recipes: IRecipe[];
+      filters: IFilters;
+      removeRecipe: (id: number) => void;
+      toggleFavorite: (id: number) => void;
+      onSearchChange: (search: string) => void;
+      onFavoriteChange: () => void;
+      addRecipe: (recipe: ISubmittedRecipe) => void;
+    }
+  | undefined
+>(undefined);
 
 export default function RecipeProvider({
   children,
