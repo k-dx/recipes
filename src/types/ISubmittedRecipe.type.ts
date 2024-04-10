@@ -6,4 +6,4 @@ import { IRecipe } from "./IRecipe.type";
 //   description: string;
 // }
 
-export type ISubmittedRecipe = Exclude<IRecipe, "id" | "favorite">;
+export type ISubmittedRecipe = Omit<IRecipe, "id" | "favorite">;
